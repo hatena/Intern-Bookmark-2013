@@ -1,0 +1,22 @@
+[% WRAPPER '_wrapper.tt' WITH title = "Intern::Bookmark::Top" %]
+
+[% IF bookmarks.size() %]
+  [% FOR bookmark IN bookmarks %]
+  <section class="bookmark">
+    [% SET entry = bookmark.entry %]
+    <header>
+      <a href="/bookmark?url=[% uri_escape(entry.url) %]">[% entry.title %]</a>
+    </header>
+    <p>[% bookmark.comment %]</p>
+    <footer>
+      [% bookmark.created.strftime('%Y-%m-%d') %]
+      <a href="/bookmark/add?url=[% uri_escape(entry.url) %]">編集</a>
+      <a href="/bookmark/delete?url=[% uri_escape(entry.url) %]">削除</a>
+    </footer>
+  </section>
+  [% END %]
+[% ELSE %]
+  <p>ブックマークがまだありません → <a href="/bookmark/add">作成</a></p>
+[% END %]
+
+[% END # WRAPPER %]

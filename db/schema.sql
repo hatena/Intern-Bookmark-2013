@@ -1,0 +1,32 @@
+CREATE TABLE user (
+    `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARBINARY(32) NOT NULL,
+
+    `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+
+    PRIMARY KEY (user_id),
+    UNIQUE KEY (name),
+    KEY (created)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE entry (
+    `entry_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `url` VARBINARY(512) NOT NULL,
+    `title` VARBINARY(512) NOT NULL,
+    `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+    PRIMARY KEY (entry_id),
+    UNIQUE KEY (url)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE bookmark (
+    `bookmark_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT UNSIGNED NOT NULL,
+    `entry_id` BIGINT UNSIGNED NOT NULL,
+    `comment` VARBINARY(256),
+    `created` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `updated` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+    PRIMARY KEY (bookmark_id),
+    UNIQUE KEY (user_id, entry_id),
+    KEY (user_id, created)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

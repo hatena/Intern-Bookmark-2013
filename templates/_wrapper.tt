@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>[% title %]</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    </head>
+    <body>
+        <header id="global-header">
+            [% IF c.user %]
+            ようこそ [% c.user.name | html %] さん |
+            <a href="/bookmark/add">作成</a> |
+            <a href="/">一覧</a> |
+            [% ELSE %]
+            <a href="/login">ログイン</a>
+            [% END %]
+        </header>
+
+        <div id="content">
+            [% IF c.user %]
+            [% content %]
+            [% ELSE %]
+            <p><a href="/login">ログイン</a>しないと使えません!</p>
+            [% END %]
+        </div>
+
+        <footer id="global-footer">
+            Hatena
+        </footer>
+    </body>
+</html>

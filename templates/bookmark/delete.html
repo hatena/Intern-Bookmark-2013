@@ -1,0 +1,27 @@
+[% WRAPPER "_wrapper.tt" WITH title = "Intern::Bookmark::Delete" %]
+
+<form action="" method="post">
+  <p>本当に削除しますか?</p>
+  <table>
+    <tr>
+      <th><label for="url">URL</label></th>
+      <td>
+        [% entry.url %]
+      </td>
+    </tr>
+    <tr>
+      <th><label for="comment">コメント</label></th>
+      <td>
+        [% bookmark.comment %]
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="submit">
+        <input type="submit" value="削除"/>
+        <input type="hidden" name="url" value="[% entry.url %]"/>
+      </td>
+    </tr>
+  </table>
+</form>
+
+[% END %]

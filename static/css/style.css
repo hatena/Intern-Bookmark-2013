@@ -1,0 +1,75 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    color: #333;
+    background: #fff;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#global-header {
+    display: block;
+    padding: 10px;
+    background: #efefef;
+}
+
+#content {
+    display: block;
+    padding: 10px;
+}
+
+#global-footer {
+    display: block;
+    padding: 10px;
+    background: #efefef;
+}
+
+form table {
+    border-collapse: collapse;
+    width: 800px;
+}
+
+form table tr th ,
+form table tr td {
+    padding: 10px 0;
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 1px 0;
+}
+
+form table th {
+    width: 10em;
+    font-size: 80%;
+    color: #333;
+}
+
+form table td input.text {
+    width: 500px;
+}
+
+form table td.submit {
+    text-align: center;
+}
+
+.bookmark {
+    padding: 10px;
+}
+
+.bookmark p {
+    margin: 0;
+    padding: 0;
+}
+
+.bookmark footer {
+    font-size: 80%;
+    color: #666;
+}

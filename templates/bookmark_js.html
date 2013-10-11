@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>[% title %]</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <script type="text/javascript" src="/js/underscore.js"></script>
+        <script type="text/javascript" src="/js/bookmark.js"></script>
+    </head>
+    <body>
+        <header id="global-header">
+            [% IF c.user %]
+            ようこそ [% c.user.name | html %] さん
+            [% ELSE %]
+            <a href="/login">ログイン</a>
+            [% END %]
+        </header>
+
+        <form id="bookmark-adding-form">
+          <label>URL <input type="text" name="url" /></label>
+          <label>コメント <input type="text" name="comment" /></label>
+          <input type="submit" value="ブックマーク追加" />
+        </form>
+
+        <div id="content">
+            [% IF c.user %]
+
+            [% ELSE %]
+            <p><a href="/login">ログイン</a>しないと使えません!</p>
+            [% END %]
+        </div>
+
+        <footer id="global-footer">
+            Hatena
+        </footer>
+    </body>
+</html>

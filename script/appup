@@ -1,0 +1,72 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+no  warnings 'redefine';
+
+$ENV{DEBUG} = 1 unless defined $ENV{DEBUG};
+$ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
+
+my $runner = Plack::Runner::Intern::Bookmark->new;
+$runner->parse_options(
+    '--port' => 3000,
+    '--app'  => 'script/app.psgi',
+    '--Reload' => join(',', glob 'lib modules/*/lib'),
+    @ARGV,
+);
+
+$ENV{INTERN_BOOKMARK_ENV} = $runner->{env} || 'local'; # -E は INTERN_BOOKMARK_ENV に伝播
+$runner->{env} = 'development';
+
+my $options = +{ @{ $runner->{options} } };
+
+# --enable-kyt-prof
+if ($options->{kyt_prof}) {
+    require Devel::KYTProf;
+    Devel::KYTProf->namespace_regex(qr/^Intern::Bookmark/);
+}
+
+# --disable-lessc すると less.pl 立てない
+# unless (exists $options->{lessc} && !$options->{lessc}) {
+#     if (my $pid = fork) {
+#         print STDERR "forking less.pl pid=$pid\n";
+#     } else {
+#         exec $^X, 'script/tools/less.pl';
+#     }
+# }
+
+$runner->run;
+
+package Plack::Runner::Intern::Bookmark;
+use strict;
+use warnings;
+use parent 'Plack::Runner';
+use Plack::Runner;
+use Plack::Builder;
+
+sub prepare_devel {
+    my ($self, $app) = @_;
+
+    $app = Plack::Runner::build {
+        my $app = shift;
+
+        builder {
+            enable 'Lint';
+            enable 'StackTrace';
+
+            enable_if { $_[0]->{PATH_INFO} !~ m<^/(images/|js/|css/|favicon\.ico)> }
+                'AccessLog';
+
+            mount '/'   => $app;
+        };
+    } $app;
+
+    push @{$self->{options}}, server_ready => sub {
+        my($args) = @_;
+        my $name  = $args->{server_software} || ref($args); # $args is $server
+        my $host  = $args->{host} || 0;
+        my $proto = $args->{proto} || 'http';
+        print STDERR "$name: Accepting connections at $proto://$host:$args->{port}/\n";
+    };
+
+    $app;
+}

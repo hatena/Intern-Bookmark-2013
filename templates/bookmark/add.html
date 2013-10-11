@@ -1,0 +1,25 @@
+[% WRAPPER "_wrapper.tt" WITH title = "Intern::Bookmark::Add" %]
+
+<form action="/bookmark/add" method="post">
+  <table>
+    <tr>
+      <th><label for="url">URL</label></th>
+      <td>
+        <input type="text" id="url" name="url" class="text" value="[% entry ? entry.url : r.req.param('url') %]"/>
+      </td>
+    </tr>
+    <tr>
+      <th><label for="comment">コメント</label></th>
+      <td>
+        <input type="text" id="comment" name="comment" class="text" value="[% bookmark ? bookmark.comment : r.req.param('comment') %]"/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="submit">
+        <input type="submit" value="作成"/>
+      </td>
+    </tr>
+  </table>
+</form>
+
+[% END %]
